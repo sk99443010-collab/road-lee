@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도로관리 정보 공유 시스템</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* Light blue background */
+        }
+        
+        /* Custom modal transition */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        /* Calculator button hover effects */
+        .calc-btn {
+            transition: all 0.1s ease-in-out;
+        }
+        .calc-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 mr-2 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                    <span class="font-bold text-xl tracking-tight">도로관리 Info</span>
+                </div>
+                <div class="flex items-center space-x-1 sm:space-x-4">
+                    <button onclick="showSection('profile')" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">강사 소개</button>
+                    <button onclick="showSection('roulette')" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">룰렛 게임</button>
+                    <button onclick="showSection('calculator')" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">계산기</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
+        
+        <!-- Section 1: Instructor Profile -->
+        <section id="profile" class="content-section">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-blue-600 max-w-3xl mx-auto">
+                <div class="md:flex">
+                    <div class="md:shrink-0 bg-blue-50 p-8 flex flex-col justify-center items-center">
+                        <!-- Profile Image Placeholder -->
+                        <img class="h-48 w-48 object-cover rounded-full border-4 border-white shadow-lg" src="https://placehold.co/400x400/1e3a8a/ffffff?text=이원준" alt="이원준 강사">
+                    </div>
+                    <div class="p-8 w-full">
+                        <div class="uppercase tracking-wide text-sm text-blue-600 font-bold mb-1">도로시설 관리 전문가</div>
+                        <h2 class="block mt-1 text-3xl leading-tight font-extrabold text-gray-900 mb-4">이원준 <span class="text-lg text-gray-500 font-normal">강사</span></h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="flex items-center text-lg font-semibold text-gray-800 border-b pb-2">
+                                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                    현재 직책 및 경력
+                                </h3>
+                                <ul class="mt-2 text-gray-600 space-y-1 pl-7 list-disc list-outside">
+                                    <li><strong class="text-gray-800">현)</strong> 서울문산고속도로 시설관리팀장</li>
+                                    <li><strong class="text-gray-800">전)</strong> 평택시흥고속도로 근무</li>
+                                    <li><strong class="text-gray-800">전)</strong> 광주원주고속도로 근무</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 class="flex items-center text-lg font-semibold text-gray-800 border-b pb-2">
+                                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0-6l-9 5-9-5"></path></svg>
+                                    학력
+                                </h3>
+                                <ul class="mt-2 text-gray-600 space-y-1 pl-7 list-disc list-outside">
+                                    <li>토목공학 학사</li>
+                                    <li>도시계획(도시개발) 석사</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 class="flex items-center text-lg font-semibold text-gray-800 border-b pb-2">
+                                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                    주요 표창
+                                </h3>
+                                <ul class="mt-2 text-gray-600 space-y-1 pl-7 list-disc list-outside">
+                                    <li>국토교통부 장관표창 등 다수 수상</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Roulette Game -->
+        <section id="roulette" class="content-section hidden">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-t-4 border-blue-400 max-w-2xl mx-auto p-6 text-center flex flex-col items-center">
+                <h2 class="text-2xl font-bold text-blue-900 mb-2">오늘의 업무 룰렛</h2>
+                <p class="text-gray-500 mb-8">버튼을 눌러 다음 활동을 정해보세요!</p>
+                
+                <div class="relative w-80 h-80 mb-8 flex justify-center items-center">
+                    <!-- Pointer -->
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4 z-10">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="#ef4444" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L22 20H2L12 2Z" transform="rotate(180 12 12)"/>
+                        </svg>
+                    </div>
+                    <!-- Wheel Canvas -->
+                    <canvas id="rouletteWheel" width="300" height="300" class="rounded-full shadow-md"></canvas>
+                </div>
+
+                <button id="spinBtn" onclick="spinRoulette()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-12 rounded-full shadow-lg transition-transform transform hover:scale-105 active:scale-95 text-lg">
+                    회전하기
+                </button>
+            </div>
+        </section>
+
+        <!-- Section 3: Calculator -->
+        <section id="calculator" class="content-section hidden">
+            <div class="max-w-sm mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-blue-100 p-6">
+                <h2 class="text-xl font-bold text-blue-900 mb-4 text-center">업무용 계산기</h2>
+                
+                <!-- Calculator Display -->
+                <div class="bg-slate-100 rounded-xl p-4 mb-4 shadow-inner text-right">
+                    <div id="calc-history" class="h-6 text-sm text-gray-500 overflow-hidden"></div>
+                    <div id="calc-display" class="text-4xl font-bold text-slate-800 tracking-wider overflow-x-auto whitespace-nowrap scrollbar-hide">0</div>
+                </div>
+
+                <!-- Calculator Keypad -->
+                <div class="grid grid-cols-4 gap-3">
+                    <!-- Row 1 -->
+                    <button onclick="calcClear()" class="calc-btn col-span-2 bg-red-100 hover:bg-red-200 text-red-600 font-bold py-4 rounded-xl shadow-sm">C</button>
+                    <button onclick="calcDelete()" class="calc-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 rounded-xl shadow-sm">⌫</button>
+                    <button onclick="calcOperator('/')" class="calc-btn bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm text-xl">÷</button>
+                    
+                    <!-- Row 2 -->
+                    <button onclick="calcNum('7')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">7</button>
+                    <button onclick="calcNum('8')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">8</button>
+                    <button onclick="calcNum('9')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">9</button>
+                    <button onclick="calcOperator('*')" class="calc-btn bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm text-xl">×</button>
+                    
+                    <!-- Row 3 -->
+                    <button onclick="calcNum('4')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">4</button>
+                    <button onclick="calcNum('5')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">5</button>
+                    <button onclick="calcNum('6')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">6</button>
+                    <button onclick="calcOperator('-')" class="calc-btn bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm text-xl">−</button>
+                    
+                    <!-- Row 4 -->
+                    <button onclick="calcNum('1')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">1</button>
+                    <button onclick="calcNum('2')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">2</button>
+                    <button onclick="calcNum('3')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">3</button>
+                    <button onclick="calcOperator('+')" class="calc-btn bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm text-xl">+</button>
+                    
+                    <!-- Row 5 -->
+                    <button onclick="calcNum('0')" class="calc-btn col-span-2 bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">0</button>
+                    <button onclick="calcNum('.')" class="calc-btn bg-white border hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-sm text-xl">.</button>
+                    <button onclick="calcEqual()" class="calc-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-md text-xl">=</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Alert Modal (To replace window.alert) -->
+    <div id="customModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[100]">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl text-center transform transition-all">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
+                <svg class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">당첨!</h3>
+            <p id="modalMessage" class="text-lg text-blue-600 font-semibold mb-6"></p>
+            <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition">
+                확인
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-blue-200 py-6 text-center text-sm">
+        <p>© 2026 도로관리 정보 공유 시스템. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- Navigation Logic ---
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => {
+                sec.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Re-draw roulette to fix any canvas sizing issues when unhidden
+            if(sectionId === 'roulette' && !isSpinning) {
+                drawRoulette();
+            }
+        }
+
+        // --- Custom Modal Logic ---
+        function showModal(message) {
+            const modal = document.getElementById('customModal');
+            document.getElementById('modalMessage').innerText = message;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // simple animation effect
+            modal.firstElementChild.classList.add('modal-enter');
+            requestAnimationFrame(() => {
+                modal.firstElementChild.classList.add('modal-enter-active');
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            modal.firstElementChild.classList.remove('modal-enter', 'modal-enter-active');
+        }
+
+        // --- Roulette Logic ---
+        const canvas = document.getElementById('rouletteWheel');
+        const ctx = canvas.getContext('2d');
+        const segments = ["현장 순찰", "서류 작업", "안전 점검", "휴식 시간", "커피 한잔", "타 부서 협의"];
+        const colors = ["#eff6ff", "#dbeafe", "#bfdbfe", "#93c5fd", "#60a5fa", "#3b82f6"]; // Tailwind blues
+        const textColors = ["#1e3a8a", "#1e3a8a", "#1e3a8a", "#1e3a8a", "#ffffff", "#ffffff"]; 
+        let currentAngle = 0;
+        let isSpinning = false;
+
+        function drawRoulette() {
+            const radius = canvas.width / 2;
+            const arc = (Math.PI * 2) / segments.length;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < segments.length; i++) {
+                const angle = currentAngle + i * arc;
+                
+                // Draw Segment
+                ctx.beginPath();
+                ctx.fillStyle = colors[i];
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + arc, false);
+                ctx.lineTo(radius, radius);
+                ctx.fill();
+                
+                // Draw Border
+                ctx.strokeStyle = "#ffffff";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw Text
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + arc / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = textColors[i];
+                ctx.font = "bold 16px Inter, sans-serif";
+                ctx.fillText(segments[i], radius - 20, 6);
+                ctx.restore();
+            }
+        }
+
+        function spinRoulette() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true;
+            spinBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            const spinTimeTotal = Math.random() * 2000 + 3000; // 3 to 5 seconds
+            let spinTime = 0;
+            const spinAngleStart = Math.random() * 10 + 10;
+            
+            function rotateWheel() {
+                spinTime += 30;
+                if (spinTime >= spinTimeTotal) {
+                    stopRotateWheel();
+                    return;
+                }
+                const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+                currentAngle += (spinAngle * Math.PI / 180);
+                drawRoulette();
+                requestAnimationFrame(rotateWheel);
+            }
+            rotateWheel();
+        }
+
+        function stopRotateWheel() {
+            isSpinning = false;
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = false;
+            spinBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+            // Calculate winner
+            // The pointer is at top (-90 degrees or -PI/2)
+            const degrees = currentAngle * 180 / Math.PI + 90;
+            const arcd = 360 / segments.length;
+            const index = Math.floor((360 - (degrees % 360)) / arcd);
+            
+            // Show result using custom modal
+            setTimeout(() => {
+                showModal(`다음 업무: ${segments[index]}`);
+            }, 300);
+        }
+
+        // Easing function for smooth stop
+        function easeOut(t, b, c, d) {
+            const ts = (t /= d) * t;
+            const tc = ts * t;
+            return b + c * (tc + -3 * ts + 3 * t);
+        }
+
+        // Initialize Roulette
+        drawRoulette();
+
+
+        // --- Calculator Logic ---
+        let currentCalcInput = '0';
+        let calcHistoryStr = '';
+        let previousVal = null;
+        let operation = null;
+        let shouldResetDisplay = false;
+
+        const displayEl = document.getElementById('calc-display');
+        const historyEl = document.getElementById('calc-history');
+
+        function updateDisplay() {
+            displayEl.innerText = currentCalcInput;
+            historyEl.innerText = calcHistoryStr;
+        }
+
+        function calcNum(num) {
+            if (currentCalcInput === '0' || shouldResetDisplay) {
+                if (num === '.') {
+                    currentCalcInput = '0.';
+                } else {
+                    currentCalcInput = num;
+                }
+                shouldResetDisplay = false;
+            } else {
+                if (num === '.' && currentCalcInput.includes('.')) return;
+                currentCalcInput += num;
+            }
+            updateDisplay();
+        }
+
+        function calcOperator(op) {
+            if (operation !== null && !shouldResetDisplay) {
+                calcEqual();
+            }
+            previousVal = parseFloat(currentCalcInput);
+            operation = op;
+            shouldResetDisplay = true;
+            calcHistoryStr = `${previousVal} ${op.replace('*', '×').replace('/', '÷')}`;
+            updateDisplay();
+        }
+
+        function calcEqual() {
+            if (operation === null || shouldResetDisplay) return;
+            
+            const currentVal = parseFloat(currentCalcInput);
+            let result;
+
+            switch(operation) {
+                case '+': result = previousVal + currentVal; break;
+                case '-': result = previousVal - currentVal; break;
+                case '*': result = previousVal * currentVal; break;
+                case '/': 
+                    if(currentVal === 0) {
+                        showModal("0으로 나눌 수 없습니다.");
+                        calcClear();
+                        return;
+                    }
+                    result = previousVal / currentVal; 
+                    break;
+            }
+
+            // Fix floating point issues roughly
+            result = Math.round(result * 100000000) / 100000000;
+            
+            calcHistoryStr = `${previousVal} ${operation.replace('*', '×').replace('/', '÷')} ${currentVal} =`;
+            currentCalcInput = result.toString();
+            operation = null;
+            shouldResetDisplay = true;
+            updateDisplay();
+        }
+
+        function calcClear() {
+            currentCalcInput = '0';
+            calcHistoryStr = '';
+            previousVal = null;
+            operation = null;
+            shouldResetDisplay = false;
+            updateDisplay();
+        }
+
+        function calcDelete() {
+            if (shouldResetDisplay) return;
+            if (currentCalcInput.length === 1 || (currentCalcInput.length === 2 && currentCalcInput.startsWith('-'))) {
+                currentCalcInput = '0';
+            } else {
+                currentCalcInput = currentCalcInput.slice(0, -1);
+            }
+            updateDisplay();
+        }
+
+        // Initialize Calculator Display
+        updateDisplay();
+    </script>
+</body>
+</html>
